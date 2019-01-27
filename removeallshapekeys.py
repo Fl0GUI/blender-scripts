@@ -1,4 +1,5 @@
 import bpy
+from bpy import context
 bl_info= { "name": "remove all shape keys",
            "category": "Object" }
            
@@ -9,8 +10,26 @@ class RemoveAllShapeKeys(bpy.types.Operator):
     bl_options = {'REGISTER'}                        # enable undo for the operator.
 
     def execute(self, context):
-        if bpy.context.object.data.shape_keys != None:
+        
+        # Check if the user is in edit mode
+        if not context.mode == 'OBJECT':
+            self.report({'WARNING'}, "Must be in Object Mode.")
+            return {'CANCELLED'}
+        
+        object = context.active_object # selected object
+        
+        # check the type of the active object
+        if not object.type == 'MESH':
+            self.report({'WARNING'}, "This object is not a mesh.")
+            return {'CANCELLED'}
+            
+        if object.data.shape_keys: # remove all shape keys if present
+            nshapekeys = len(object.data.shape_keys.key_blocks)
             bpy.ops.object.shape_key_remove(all=True)
+            self.report({'INFO'}, "Removed {} Shape Keys.".format(nshapekeys))
+        else:
+            self.report({'WARNING'}, "No Shape Keys to remove.")
+            
         return {'FINISHED'}
 
 def register():
