@@ -5,12 +5,12 @@ import os
 bl_info = {
     "name": "Import and save custom primitives",
     "author": "Flor Guilini",
-    "version": (0, 1),
+    "version": (0, 2),
     "blender": (2, 79, 0),
     "location": "Add menu -> Mesh -> custom primitives",
     "description": "save and append your own primitives",
     "warning": "I don't know what the heck I'm doing",
-    "wiki_url": "",
+    "wiki_url": "https://github.com/Fl0GUI/blender-scripts",
     "tracker_url": "",
     "category": "Import-Export",
     }
@@ -25,11 +25,10 @@ class append_model(bpy.types.Operator):
     file = bpy.props.StringProperty(name="import_file")
     
     def execute(self, context):
-        bpy.ops.wm.append(
+        return bpy.ops.wm.append(
             directory=self.file + "\\Object\\",
             filename=self.object
         )
-        return {'FINISHED'}
 
 class save_model(bpy.types.Operator):
     bl_idname = "object.saveprimitive"
@@ -39,8 +38,10 @@ class save_model(bpy.types.Operator):
     file = bpy.props.StringProperty(name="export_file")
 
     def execute(self, context):
-        print("executing")
         selected = set(context.selected_objects)
+        for obj in selected:
+            obj.location = (0,0,0)
+
         bpy.data.libraries.write(
             filepath=self.file,
             datablocks=selected,
@@ -75,11 +76,10 @@ class INFO_MT_mesh_append_add(bpy.types.Menu):
 def menufunc(self, context):
     layout = self.layout
     layout.separator()
-    layout.menu("INFO_MT_mesh_append_add", text="append from file")
+    layout.menu("INFO_MT_mesh_append_add", text="custom primitives")
     
 
 def register():
-    print("registered")
     bpy.utils.register_class(append_model)
     bpy.utils.register_class(save_model)
     bpy.utils.register_class(INFO_MT_mesh_append_add)
