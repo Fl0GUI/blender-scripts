@@ -28,7 +28,14 @@ class RemoveDoublesFromAll(bpy.types.Operator):
                 bpy.ops.object.editmode_toggle()
         return {'FINISHED'}
 
+def addUI(self, context):
+    layout = self.layout
+    layout.separator()
+    layout.operator("object.removedoublesfromall", text="remove doubles from all meshes")
+
 def register():
     bpy.utils.register_class(RemoveDoublesFromAll)
+    bpy.types.VIEW3D_MT_object.append(addUI)
 def unregister():
     bpy.utils.unregister_class(RemoveDoublesFromAll)
+    bpy.types.VIEW3D_MT_object.remove(addUI)
