@@ -8,5 +8,19 @@ These are blender scripts that I made for myself or on request. Feel free to req
 
 1 the user preferences in blender 2.7 are under `file`
 
+# The scripts
+
+### bulk blend from shape
+Blends all activated Shape keys. (tbh I have no clue what this does, I'm not a blender expert)
+
+This function can be located under the context menu of the Shape keys pane. (the little arrow under add and remove)
+### custom primitives
+Allows the user to store and fetch objects as if they were primitives.
+
+This function can be found under the Add menu -> Mesh. (It should just be in the add menu since it works for more than only meshes)
+### remove doubles from all
+Applies the remove doubles operator on all of the objects.
+
+This function can be found under Object from 3dview.
 ## How to build
 1. run `$ make`
