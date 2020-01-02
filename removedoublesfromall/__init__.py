@@ -20,7 +20,7 @@ class RemoveDoublesFromAll(bpy.types.Operator):
 
     def execute(self, context):
         for obj in bpy.data.objects:
-            context.view_layer.objects.active = obj
+            context.scene.objects.active = obj
             if bpy.ops.object.editmode_toggle.poll(): 
                 bpy.ops.object.editmode_toggle()
             if bpy.ops.mesh.select_all.poll():

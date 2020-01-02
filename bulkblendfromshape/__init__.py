@@ -77,11 +77,11 @@ def addUI(self, context):
 
 def register():
     bpy.utils.register_class(BulkBlendFromShape)
-    bpy.types.MESH_MT_shape_key_context_menu.append(addUI)
+    bpy.types.MESH_MT_shape_key_specials.append(addUI)
     
 def unregister():
     bpy.utils.unregister_class(BulkBlendFromShape)
-    bpy.types.MESH_MT_shape_key_context_menu.remove(addUI)
+    bpy.types.MESH_MT_shape_key_specials.remove(addUI)
 
 if __name__== "__main__":
      register()
