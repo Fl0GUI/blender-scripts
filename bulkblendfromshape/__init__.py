@@ -2,9 +2,18 @@ import time
 import bpy
 from bpy import context as context
 from bpy import ops as operations
-bl_info= { "name": "bulk blend from shape",
-           "category": "Object",
-           "blender": (2,80,0)}
+bl_info= {
+    "name": "bulk blend from shape",
+    "description": "blends all active shape keys",
+    "author": "Flor Guilini",
+    "version": (420, 69),
+    "blender": (2,80,0)
+    "location": "Shape keys -> context menu",
+    "warning": "I don't know what the heck I'm doing",
+    "wiki_url": "https://github.com/Fl0GUI/blender-scripts",
+    "tracker_url": "",
+    "category": "Object"
+}
            
 class BulkBlendFromShape(bpy.types.Operator):
     """Taking VR_smoothie's job script by script"""  # blender will use this as a tooltip for menu items and buttons.

@@ -1,14 +1,17 @@
 import bpy
 
 bl_info = {
-    "name": "remove all doubles",
-    "description": "removes the doubles from all meshes, use in object mode",
-    "author": "me :)",
-    "blender": (2,80,0),
-    "location": "F3 menu",
-    "warning": "No clue what I am doing",
-    "category": "Mesh"
-    }
+    "name": "remove all the doubles",
+    "description": "removes doubles from all meshes",
+    "author": "Flor Guilini",
+    "version": (420, 69),
+    "blender": (2,80,0)
+    "location": "Object",
+    "warning": "I don't know what the heck I'm doing",
+    "wiki_url": "https://github.com/Fl0GUI/blender-scripts",
+    "tracker_url": "",
+    "category": "Object"
+}
 
 class RemoveDoublesFromAll(bpy.types.Operator):
     bl_idname = "object.removedoublesfromall"

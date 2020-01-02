@@ -5,7 +5,7 @@ import os
 bl_info= {
     "name": "Import and save custom primitives",
     "author": "Flor Guilini",
-    "version": (0, 69),
+    "version": (420, 69),
     "blender": (2, 80, 0),
     "location": "Add menu -> Mesh -> custom primitives",
     "description": "save and append your own primitives",
