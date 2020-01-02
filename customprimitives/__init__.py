@@ -2,11 +2,11 @@ import bpy
 from pathlib import Path
 import os
 
-bl_info = {
+bl_info= {
     "name": "Import and save custom primitives",
     "author": "Flor Guilini",
-    "version": (0, 4),
-    "blender": (2, 79, 0),
+    "version": (0, 69),
+    "blender": (2, 80, 0),
     "location": "Add menu -> Mesh -> custom primitives",
     "description": "save and append your own primitives",
     "warning": "I don't know what the heck I'm doing",
@@ -21,7 +21,7 @@ class remove_model(bpy.types.Operator):
     bl_idname = "object.removeprimitive"
     bl_label = "remove primitive"
 
-    file = bpy.props.StringProperty(name="import_file")
+    file: bpy.props.StringProperty(name="import_file")
 
     def execute(self, context):
         os.remove(self.file)
@@ -33,8 +33,8 @@ class import_model(bpy.types.Operator):
     bl_label = "append primitive"
     bl_options = {'REGISTER', 'UNDO'}
     
-    object = bpy.props.StringProperty(name="import_object")
-    file = bpy.props.StringProperty(name="import_file")
+    object: bpy.props.StringProperty(name="import_object")
+    file: bpy.props.StringProperty(name="import_file")
     
     def execute(self, context):
         bpy.ops.wm.append(
@@ -49,7 +49,7 @@ class import_model(bpy.types.Operator):
             ob = nextob
             nextob = self.object + ".{:03d}".format(dub)
             dub += 1
-        bpy.data.objects[ob].location = context.scene.cursor_location
+        bpy.data.objects[ob].location = context.scene.cursor.location
         return {'FINISHED'}
 
 class save_model(bpy.types.Operator):
@@ -120,12 +120,13 @@ def menufunc(self, context):
     
 
 def register():
+    print("hi")
     bpy.utils.register_class(remove_model)
     bpy.utils.register_class(import_model)
     bpy.utils.register_class(save_model)
     bpy.utils.register_class(INFO_MT_mesh_primitive_add)
     bpy.utils.register_class(INFO_MT_mesh_primitive_remove)
-    bpy.types.INFO_MT_mesh_add.append(menufunc)
+    bpy.types.VIEW3D_MT_mesh_add.append(menufunc)
 
 def unregister():
     bpy.utils.unregister_class(remove_model)
@@ -133,7 +134,7 @@ def unregister():
     bpy.utils.unregister_class(import_model)
     bpy.utils.unregister_class(INFO_MT_mesh_primitive_add)
     bpy.utils.unregister_class(INFO_MT_mesh_primitive_remove)
-    bpy.types.INFO_MT_mesh_add.remove(menufunc)
+    bpy.types.VIEW3D_MT_mesh_add.remove(menufunc)
 
 if __name__ == "__main__":
     register()
