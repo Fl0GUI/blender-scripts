@@ -3,7 +3,8 @@ import bpy
 from bpy import context as context
 from bpy import ops as operations
 bl_info= { "name": "bulk blend from shape",
-           "category": "Object" }
+           "category": "Object",
+           "blender": (2,80,0)}
            
 class BulkBlendFromShape(bpy.types.Operator):
     """Taking VR_smoothie's job script by script"""  # blender will use this as a tooltip for menu items and buttons.
