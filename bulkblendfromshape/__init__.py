@@ -7,7 +7,7 @@ bl_info= {
     "description": "blends all active shape keys",
     "author": "Flor Guilini",
     "version": (420, 69),
-    "blender": (2,80,0)
+    "blender": (2,80,0),
     "location": "Shape keys -> context menu",
     "warning": "I don't know what the heck I'm doing",
     "wiki_url": "https://github.com/Fl0GUI/blender-scripts",
