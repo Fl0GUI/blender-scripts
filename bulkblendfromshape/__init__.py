@@ -12,6 +12,10 @@ class BulkBlendFromShape(bpy.types.Operator):
     bl_label = "Bulk Blend From Shape"               # display name in the interface.
     bl_options = {'REGISTER'}                        # enable undo for the operator.
 
+    @classmethod
+    def poll(cls, context):
+        return context.mode == 'EDIT_MESH'
+
     def execute(self, context):
         
         # Check if the user is in edit mode
@@ -57,12 +61,18 @@ class BulkBlendFromShape(bpy.types.Operator):
             self.report({'WARNING'}, "failed {} Blend From Shape operations, sorry. ".format(nfailed))
             return {'FINISHED'}
 
+def addUI(self, context):
+    layout = self.layout
+    layout.separator()
+    layout.operator("object.bulkblendfromshape", text="blend all active")
 
 def register():
     bpy.utils.register_class(BulkBlendFromShape)
+    bpy.types.MESH_MT_shape_key_context_menu.append(addUI)
     
 def unregister():
     bpy.utils.unregister_class(BulkBlendFromShape)
+    bpy.types.MESH_MT_shape_key_context_menu.remove(addUI)
 
 if __name__== "__main__":
      register()
