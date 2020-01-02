@@ -32,22 +32,29 @@ class BulkBlendFromShape(bpy.types.Operator):
             return {'CANCELLED'}
             
         nsuccesful = 0 # number of succesful blend_from_shape calls
+        nfailed = 0 # number of failed blend_from_shape calls
         nshapekeys = len(shape_keys.key_blocks.items()) # get number of shape keys
         OGKeyFrame = object.active_shape_key_index # get current Shape Key
 
         tic = time.time()
         for i in range(nshapekeys): # iterate over shape keys
             object.active_shape_key_index = i # set the active shape key
-            if {'FINISHED'} == operations.mesh.blend_from_shape(add=False): # function that has to be done repetively
-                nsuccesful += 1 # Count how many operations were succesful
+            if not shape_keys.key_blocks[i].mute: # only blend active keys
+                if {'FINISHED'} == operations.mesh.blend_from_shape(add=False): # function that has to be done repetively
+                    nsuccesful += 1 # Count how many operations were succesful
+                else:
+                    nfailed += 1
         toc = time.time()
         
         object.active_shape_key_index = OGKeyFrame # set key frame back to original
         if nsuccesful == nshapekeys:
             self.report({'INFO'}, "Blend From Shape was succesful for all shape keys in {:.2f}s.".format(toc - tic))
             return {'FINISHED'}
+        elif nfailed == 0:
+            self.report({'INFO'}, "Blend From Shape was succesful for {:d} shape keys in {:.2f}s.".format(nsuccesful, toc - tic))
+            return {'FINISHED'}
         else:
-            self.report({'WARNING'}, "failed {} Blend From Shape operations, sorry. ".format(nshapekeys - nsuccesful))
+            self.report({'WARNING'}, "failed {} Blend From Shape operations, sorry. ".format(nfailed))
             return {'FINISHED'}
 
 
